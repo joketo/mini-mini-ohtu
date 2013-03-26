@@ -1,0 +1,57 @@
+package domain;
+
+
+import java.util.HashMap;
+
+/**
+ *
+ * @author heidi
+ */
+public class Reference {
+    /** Reference type, for example "Book"**/
+    private String type;
+    /** Unique reference id **/
+    private String id;
+    /** Data entries in this reference. Keys are data entry types**/
+    private HashMap<String, String> entries;
+    
+    public Reference(String type, String id) {
+        this.type = type;
+        this.id = id;
+        this.entries = new HashMap<String, String>();
+    }
+    
+    public String getType() {
+        return this.type;
+    }
+    
+    public String getID() {
+        return this.id;
+    }
+    
+    public HashMap<String, String> getEntries() {
+        return this.entries;
+    }
+    
+    /** Edits a data entry of given type. If the data entry type does not exist, 
+     * adds the data entry type and its value**/ 
+    public void editEntry(String entryType, String newValue) {
+        this.entries.put(entryType, newValue);
+    }
+    
+    /** Returns this reference in BibTex form**/ 
+    public String toBibtex() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("@").append(this.type).append("{").append(this.id).append(",\n");
+   
+        for (String entry : this.entries.keySet()) {
+            sb.append(" ");
+            sb.append(entry).append(" = {").append(this.entries.get(entry)).append("},\n");
+        }
+        sb.append("}\n");
+        return sb.toString();
+    }
+    
+    
+    
+}
