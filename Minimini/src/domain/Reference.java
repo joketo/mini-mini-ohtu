@@ -7,7 +7,7 @@ import java.util.HashMap;
  *
  * @author heidi
  */
-public class Reference {
+public class Reference implements Comparable<Reference>{
     /** Reference type, for example "Book"**/
     private String type;
     /** Unique reference id **/
@@ -50,6 +50,19 @@ public class Reference {
         }
         sb.append("}\n");
         return sb.toString();
+    }
+    
+    public boolean equals(Object o) {
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+        Reference other = (Reference) o;
+        return this.compareTo(other) == 0;
+    }
+    
+    @Override
+    public int compareTo(Reference t) {
+        return this.getID().compareToIgnoreCase(t.getID());
     }
     
     
