@@ -3,10 +3,14 @@ package minimini.gui;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
 import minimini.domain.Reference;
+import minimini.domain.ReferenceList;
 
 public class MainScreen extends JFrame {
     
+    private ReferenceList refs;
+     
     private Container pane;
     private MainScreen.SaveButtonHandler saveHandler;
     private SpringLayout layout;
@@ -18,6 +22,7 @@ public class MainScreen extends JFrame {
     private JTextField publisherField;
     private JTextField journalField;
     private JTextField idField;
+    private MainScreen.WriteButtonHandler writeHandler;
     
     public MainScreen() {
         initValues();
@@ -26,6 +31,7 @@ public class MainScreen extends JFrame {
         initButtons();
 
         setSize(450, 400);
+        this.refs = new ReferenceList();
         
     } 
     
@@ -51,6 +57,13 @@ public class MainScreen extends JFrame {
          saveHandler = new MainScreen.SaveButtonHandler();
          save.addActionListener(saveHandler);
          pane.add(save);
+         
+         JButton write = new JButton("Write");
+         layout.putConstraint(SpringLayout.WEST, write, 80, SpringLayout.WEST, save);
+         layout.putConstraint(SpringLayout.SOUTH, write, -5, SpringLayout.SOUTH, pane);
+         writeHandler = new MainScreen.WriteButtonHandler();
+         write.addActionListener(writeHandler);
+         pane.add(write);
     }
     
     private void initElements() {
@@ -160,6 +173,14 @@ public class MainScreen extends JFrame {
         return typeSelect.getSelectedItem().toString();
     }
     
+    public void writeAll() {
+        try {
+            refs.bibtexAll();
+        } catch (IOException e) {
+            System.out.println("File not found. Cannot create or open file.");
+        }
+    }
+    
     public void clearFields() {
         idField.setText(null);
         titleField.setText(null);
@@ -179,7 +200,8 @@ public class MainScreen extends JFrame {
                 ref.editEntry("Author", authorField.getText());
                 ref.editEntry("Year", yearField.getText());
                 ref.editEntry("Publisher", publisherField.getText());
-                System.out.println(ref.toBibtex());
+                //System.out.println(ref.toBibtex());
+                refs.add(ref);
                 clearFields();
             }
             
@@ -189,7 +211,8 @@ public class MainScreen extends JFrame {
                 ref.editEntry("Author", authorField.getText());
                 ref.editEntry("Year", yearField.getText());
                 ref.editEntry("Journal", journalField.getText());
-                System.out.println(ref.toBibtex());
+                //System.out.println(ref.toBibtex());
+                refs.add(ref);
                 clearFields();
             }
             
@@ -222,5 +245,14 @@ public class MainScreen extends JFrame {
               }  
               
           }
+      }
+      
+      private class WriteButtonHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            writeAll();
+        }
+          
       }
 }
