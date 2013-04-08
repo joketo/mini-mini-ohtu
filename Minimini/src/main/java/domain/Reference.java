@@ -29,24 +29,28 @@ public class Reference implements Comparable<Reference>{
         return this.id;
     }
     
-    public HashMap<String, String> getEntries() {
+    public String getEntry(String entryType) {
+        return entries.get(entryType);
+    }
+    
+    public HashMap<String, String> getAllEntries() {
         return this.entries;
     }
     
     /** Edits a data entry of given type. If the data entry type does not exist, 
      * adds the data entry type and its value**/ 
     public void editEntry(String entryType, String newValue) {
-        this.entries.put(entryType, newValue);
+        entries.put(entryType, newValue);
     }
     
     /** Returns this reference in BibTex form**/ 
     public String toBibtex() {
         StringBuilder sb = new StringBuilder();
-        sb.append("@").append(this.type).append("{").append(this.id).append(",\n");
+        sb.append("@").append(type).append("{").append(id).append(",\n");
    
-        for (String entry : this.entries.keySet()) {
+        for (String entry : entries.keySet()) {
             sb.append(" ");
-            sb.append(entry).append(" = {").append(this.entries.get(entry)).append("},\n");
+            sb.append(entry).append(" = {").append(entries.get(entry)).append("},\n");
         }
         sb.append("}\n");
         return sb.toString();
