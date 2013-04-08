@@ -1,4 +1,4 @@
-package gui;
+package minimini.gui;
 
 
 public class Gui {

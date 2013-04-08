@@ -1,4 +1,4 @@
-package domain;
+package minimini.domain;
 
 
 import java.util.HashMap;

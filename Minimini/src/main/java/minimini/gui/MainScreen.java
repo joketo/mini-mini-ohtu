@@ -1,9 +1,9 @@
-package gui;
+package minimini.gui;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import domain.Reference;
+import minimini.domain.Reference;
 
 public class MainScreen extends JFrame {
     
