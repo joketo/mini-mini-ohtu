@@ -17,6 +17,7 @@ public class MainScreen extends JFrame {
     private JTextField yearField;
     private JTextField publisherField;
     private JTextField journalField;
+    private JTextField idField;
     
     public MainScreen() {
         initValues();
@@ -67,12 +68,19 @@ public class MainScreen extends JFrame {
         final int topEdge = 45;
         final int spaceBetween = 30;
         
+        JLabel id = new JLabel("ID");
+        idField = new JTextField(30);
+        layout.putConstraint(SpringLayout.WEST, id, leftEdgeLabel, SpringLayout.WEST, pane);
+        layout.putConstraint(SpringLayout.NORTH, id, topEdge, SpringLayout.NORTH, pane);
+        layout.putConstraint(SpringLayout.WEST, idField, leftEdgeField, SpringLayout.WEST, id);
+        layout.putConstraint(SpringLayout.NORTH, idField, topEdge, SpringLayout.NORTH, pane);
+        
         JLabel title = new JLabel("Title");
         titleField = new JTextField(30);
         layout.putConstraint(SpringLayout.WEST, title, leftEdgeLabel, SpringLayout.WEST, pane);
-        layout.putConstraint(SpringLayout.NORTH, title, topEdge, SpringLayout.NORTH, pane);
+        layout.putConstraint(SpringLayout.NORTH, title, spaceBetween, SpringLayout.NORTH, id);
         layout.putConstraint(SpringLayout.WEST, titleField, leftEdgeField, SpringLayout.WEST, title);
-        layout.putConstraint(SpringLayout.NORTH, titleField, topEdge, SpringLayout.NORTH, pane);
+        layout.putConstraint(SpringLayout.NORTH, titleField, spaceBetween, SpringLayout.NORTH, idField);
         
         JLabel author = new JLabel("Author");
         authorField = new JTextField(30);
@@ -102,6 +110,7 @@ public class MainScreen extends JFrame {
         layout.putConstraint(SpringLayout.WEST, journalField, leftEdgeField, SpringLayout.WEST, title);
         layout.putConstraint(SpringLayout.NORTH, journalField, spaceBetween, SpringLayout.NORTH, publisherField);
         
+        
         pane.add(title);
         pane.add(titleField);
         pane.add(author);
@@ -112,6 +121,8 @@ public class MainScreen extends JFrame {
         pane.add(publisherField);
         pane.add(journal);
         pane.add(journalField);
+        pane.add(id);
+        pane.add(idField);
  
       
     }
@@ -140,11 +151,17 @@ public class MainScreen extends JFrame {
         pane.getComponent(10).setVisible(bool);
     }
     
+    public void setIdVisibility(boolean bool) {
+        pane.getComponent(11).setVisible(bool);
+        pane.getComponent(12).setVisible(bool);
+    }
+    
     public String getTypeSelected() {
         return typeSelect.getSelectedItem().toString();
     }
     
     public void clearFields() {
+        idField.setText(null);
         titleField.setText(null);
         yearField.setText(null);
         publisherField.setText(null);
@@ -157,7 +174,7 @@ public class MainScreen extends JFrame {
         public void actionPerformed(ActionEvent e) {
             
             if(getTypeSelected() == "Book") {
-                Reference ref = new Reference(getTypeSelected(), "1");
+                Reference ref = new Reference(getTypeSelected(), idField.getText());
                 ref.editEntry("Title", titleField.getText());
                 ref.editEntry("Author", authorField.getText());
                 ref.editEntry("Year", yearField.getText());
@@ -167,7 +184,7 @@ public class MainScreen extends JFrame {
             }
             
             if(getTypeSelected() == "Article") {
-                Reference ref = new Reference(getTypeSelected(), "1");
+                Reference ref = new Reference(getTypeSelected(), idField.getText());
                 ref.editEntry("Title", titleField.getText());
                 ref.editEntry("Author", authorField.getText());
                 ref.editEntry("Year", yearField.getText());
