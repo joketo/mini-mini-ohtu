@@ -200,7 +200,7 @@ public class MainScreen extends JFrame {
                 ref.editEntry("Author", authorField.getText());
                 ref.editEntry("Year", yearField.getText());
                 ref.editEntry("Publisher", publisherField.getText());
-                //System.out.println(ref.toBibtex());
+                System.out.println(ref.toBibtex());
                 refs.add(ref);
                 clearFields();
             }
@@ -211,7 +211,7 @@ public class MainScreen extends JFrame {
                 ref.editEntry("Author", authorField.getText());
                 ref.editEntry("Year", yearField.getText());
                 ref.editEntry("Journal", journalField.getText());
-                //System.out.println(ref.toBibtex());
+                System.out.println(ref.toBibtex());
                 refs.add(ref);
                 clearFields();
             }
